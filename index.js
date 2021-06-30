@@ -17,7 +17,6 @@ class Calculator {
 
   minus() {
     this.currentOperand = this.currentOperand * -1
-    console.log(this.currentOperand)
   }
 
   appendNumber(number) {
@@ -40,6 +39,9 @@ class Calculator {
     const prev = parseFloat(this.previousOperand)
     const current = parseFloat(this.currentOperand)
     if (Number.isNaN(prev) || Number.isNaN(current)) return
+    if (this.operation === '/' && current === '0') {
+      computation = 'Error'
+    }
     switch (this.operation) {
       case '+':
         computation = prev + current
@@ -48,9 +50,6 @@ class Calculator {
         computation = prev - current
         break
       case '/':
-        if (current === '0') {
-          computation = 'Error'
-        }
         computation = prev / current
         break
       case '*':
