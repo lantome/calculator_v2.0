@@ -8,7 +8,7 @@ class Calculator {
   clear() {
     this.currentOperand = ''
     this.previousOperand = ''
-    this.operation = undefined
+    this.operation = null
   }
 
   delete() {
@@ -16,7 +16,9 @@ class Calculator {
   }
 
   minus() {
-    this.currentOperand = this.currentOperand * -1
+    if (this.currentOperand !== '') {
+      this.currentOperand = this.currentOperand * -1
+    }
   }
 
   appendNumber(number) {
@@ -26,9 +28,7 @@ class Calculator {
 
   chooseOperation(operation) {
     if (this.currentOperand === '') return
-    if (this.previousOperand !== '') {
-      this.compute()
-    }
+    this.compute()
     this.operation = operation
     this.previousOperand = this.currentOperand
     this.currentOperand = ''
@@ -39,9 +39,6 @@ class Calculator {
     const prev = parseFloat(this.previousOperand)
     const current = parseFloat(this.currentOperand)
     if (Number.isNaN(prev) || Number.isNaN(current)) return
-    if (this.operation === '/' && current === '0') {
-      computation = 'Error'
-    }
     switch (this.operation) {
       case '+':
         computation = prev + current
@@ -59,13 +56,13 @@ class Calculator {
         return
     }
     this.currentOperand = computation
-    this.operation = undefined
+    this.operation = null
     this.previousOperand = ''
   }
 
   updateDisplay() {
     this.currentOperandTextElemet.innerText = this.currentOperand
-    if (this.operation != null) {
+    if (this.operation !== null) {
       this.previousOperandTextElemet.innerText = `${this.previousOperand} ${this.operation}`
     } else {
       this.previousOperandTextElemet.innerText = ''
